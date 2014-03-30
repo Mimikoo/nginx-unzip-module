@@ -230,7 +230,7 @@ static ngx_int_t ngx_http_unzip_handler(ngx_http_request_t *r)
     *  let's get file content and check if we got all
     *  we're expecting to get zip_st.size bytes so return 500 if we get something else.
     */
-    if (!(zip_read_bytes = zip_fread(file_in_zip, zip_content, zip_st.size)) || zip_read_bytes != zip_st.size) {
+    if (!(zip_read_bytes = zip_fread(file_in_zip, zip_content, zip_st.size)) || (unsigned) zip_read_bytes != zip_st.size) {
         ngx_log_error(NGX_LOG_ERR, r->connection->log, 0, "couldn't get %d bytes of %s from %s archive (corrupted?).", zip_st.size, unzipfile_path, unzipfile_path);
         return NGX_HTTP_INTERNAL_SERVER_ERROR;
     }
